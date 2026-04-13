@@ -18,12 +18,12 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
 # Ejecutables
 add_executable(main.out
     ${SOURCES}
-    "${CMAKE_SOURCE_DIR}/src/ejecutables/main.cpp"
+    "${CMAKE_SOURCE_DIR}/src/apps/main.cpp"
 )
 
 add_executable(prub.out
     ${SOURCES}
-    "${CMAKE_SOURCE_DIR}/src/ejecutables/prub.cpp"
+    "${CMAKE_SOURCE_DIR}/src/apps/prub.cpp"
 )
 
 # Configuración común para ambos
