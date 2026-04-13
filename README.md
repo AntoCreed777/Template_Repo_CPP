@@ -44,6 +44,27 @@ cmake --build --preset release
 add_project_executable(tool SOURCES tool.cpp)
 ```
 
+## Agregar librería
+
+1. Crear header y source de la librería, por ejemplo:
+   - `include/math/sum.hpp`
+   - `src/math/sum.cpp`
+2. Registrar la librería en `src/CMakeLists.txt`:
+```cmake
+add_project_library(math
+	SOURCES math/sum.cpp
+)
+```
+3. Enlazar la librería desde un ejecutable en `apps/CMakeLists.txt`:
+```cmake
+add_project_executable(main_app
+	SOURCES main.cpp
+	LIBRARIES math
+)
+```
+
+Nota: `add_project_library(...)` expone automáticamente `include/` para que puedas incluir headers como `#include <math/sum.hpp>`.
+
 ## Documentación
 
 - [cmake_workflow.md](docs/cmake_workflow.md) - Cómo funciona CMake
