@@ -8,3 +8,4 @@ test*
 vgcore*
 build/*.o
 */build/*.o
+/build/
