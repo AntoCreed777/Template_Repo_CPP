@@ -1,48 +1,22 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(MainProject LANGUAGES CXX)
+project(MyProject LANGUAGES CXX)
 
-# Estándar de C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-# Exportar compile_commands.json para clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Código común (sin main)
-file(GLOB SOURCES CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/*.cpp"
-)
+include(${PROJECT_SOURCE_DIR}/cmake/CompilerWarnings.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/AddProjectLibrary.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/AddProjectExecutable.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/BuildTypeOptions.cmake)
 
-# Ejecutables
-add_executable(main.out
-    ${SOURCES}
-    "${CMAKE_SOURCE_DIR}/src/apps/main.cpp"
-)
+add_library(project_warnings INTERFACE)
+target_enable_strict_warnings(project_warnings)
 
-add_executable(prub.out
-    ${SOURCES}
-    "${CMAKE_SOURCE_DIR}/src/apps/prub.cpp"
-)
+add_library(project_options INTERFACE)
+target_enable_build_type_options(project_options)
 
-# Configuración común para ambos
-foreach(target main.out prub.out)
-
-    target_include_directories(${target} PRIVATE
-        "${CMAKE_SOURCE_DIR}/include"
-    )
-
-    target_compile_options(${target} PRIVATE
-        -Wall
-        -Wextra
-        -Wpedantic
-        -Wshadow
-        -Wconversion
-        -Wsign-conversion
-        -Wfloat-equal
-        $<$<CONFIG:Debug>:-g>
-        $<$<CONFIG:Release>:-O2;-march=native;-mtune=native>
-    )
-
-endforeach()
+add_subdirectory(src)
+add_subdirectory(apps)
