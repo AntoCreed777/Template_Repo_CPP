@@ -3,6 +3,7 @@
 test*
 *.csv
 *.txt
+!CMakeLists.txt
 .idea/*
 .vscode/*
 vgcore*
